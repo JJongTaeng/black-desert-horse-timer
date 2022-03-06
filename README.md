@@ -1,4 +1,5 @@
-# black-desert-horse-calculator
+# black-desert-horse-timer
+
 
 1. 말 세대수 입력
 2. 현재 레벨 입력
