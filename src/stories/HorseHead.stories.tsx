@@ -14,3 +14,8 @@ Blue40.args = {
   size: 40,
   color: 'blue'
 }
+export const Gray20 = Template.bind({});
+Gray20.args = {
+  size: 20,
+  color: 'gray'
+}
