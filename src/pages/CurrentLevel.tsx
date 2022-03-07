@@ -19,7 +19,7 @@ const CurrentLevel = () => {
           >
             <Row>
               <Col span={4}>세대 : </Col>
-              <Col span={8}>{horse.teer}세대</Col>
+              <Col span={20}>{horse.teer}세대</Col>
             </Row>
           </Card>
         </Col>
