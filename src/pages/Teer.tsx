@@ -20,6 +20,7 @@ const Teer = () => {
           defaultValue="1"
           style={{ width: 200 }}
           onChange={(value) => {
+            localStorage.setItem('teer', value);
             setHorse((prev) => ({
                 ...prev,
                 teer: parseInt(value),

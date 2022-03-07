@@ -35,6 +35,7 @@ const Experience = () => {
         <Input
           onChange={
             (e) => {
+              localStorage.setItem('currentExperience', e.target.value);
               setHorse((prev) => {
                 return ({
                   ...prev,
@@ -55,6 +56,7 @@ const Experience = () => {
         <Input
           onChange={
             (e) => {
+              localStorage.setItem('nextExperience', e.target.value);
               setHorse((prev) => {
                 return ({
                   ...prev,
@@ -71,7 +73,6 @@ const Experience = () => {
       <Col span={24}>
         <FlexCenter>
           <Button onClick={() => {
-
             navigate(ROUTE_PATH.TICK)
           }}>계속하기</Button>
         </FlexCenter>

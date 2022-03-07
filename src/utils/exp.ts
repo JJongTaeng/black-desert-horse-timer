@@ -1,4 +1,8 @@
-export const exp = {
+export const exp: {
+  [key: number]: {
+    [key: number]: number;
+  }
+} = {
   1: {
     1: 2605,
     2: 5120,

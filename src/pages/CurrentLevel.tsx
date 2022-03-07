@@ -31,6 +31,7 @@ const CurrentLevel = () => {
             defaultValue="1"
             style={{ width: 200 }}
             onChange={(value) => {
+              localStorage.setItem('currentLevel', value);
               setHorse((prev) => ({
                   ...prev,
                   currentLevel: parseInt(value)
@@ -41,7 +42,7 @@ const CurrentLevel = () => {
             {
               Array
                 .from({ length: 30 }, (_, index) => index)
-                .map(value => <Select.Option value={value + 1}>{value + 1}</Select.Option>)
+                .map(value => <Select.Option key={value} value={value + 1}>{value + 1}</Select.Option>)
             }
           </Select>
         </Col>

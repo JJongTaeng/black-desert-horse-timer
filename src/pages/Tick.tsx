@@ -60,6 +60,7 @@ const Tick = () => {
         <Col span={6}>
           <FlexCenter>
             <Button onClick={() => {
+              localStorage.setItem('tick', (currentTime.diff(startTime) / 1000).toString());
               setHorse(prev => ({
                 ...prev,
                 tick: currentTime.diff(startTime) / 1000
