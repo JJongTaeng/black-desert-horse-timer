@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/black-desert-horse-timer/static/css/main.85ed3791.css",
-    "main.js": "/black-desert-horse-timer/static/js/main.fb68d348.js",
+    "main.js": "/black-desert-horse-timer/static/js/main.1350db8e.js",
     "static/js/787.da12c13f.chunk.js": "/black-desert-horse-timer/static/js/787.da12c13f.chunk.js",
     "index.html": "/black-desert-horse-timer/index.html",
     "main.85ed3791.css.map": "/black-desert-horse-timer/static/css/main.85ed3791.css.map",
-    "main.fb68d348.js.map": "/black-desert-horse-timer/static/js/main.fb68d348.js.map",
+    "main.1350db8e.js.map": "/black-desert-horse-timer/static/js/main.1350db8e.js.map",
     "787.da12c13f.chunk.js.map": "/black-desert-horse-timer/static/js/787.da12c13f.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.85ed3791.css",
-    "static/js/main.fb68d348.js"
+    "static/js/main.1350db8e.js"
   ]
 }
