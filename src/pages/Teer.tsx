@@ -17,6 +17,8 @@ const Teer = () => {
       </Col>
       <Col span={24}>
         <Select
+          defaultOpen={true}
+          size='large'
           defaultValue="1"
           style={{ width: 200 }}
           onChange={(value) => {

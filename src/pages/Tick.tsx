@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Button, Card, Col, Row } from "antd";
 import { useRecoilState } from "recoil";
 import { horseState } from "../store";
@@ -12,6 +12,7 @@ const Tick = () => {
   let [horse, setHorse] = useRecoilState(horseState);
   const navigate = useNavigate();
   const [startTime, setStartTime] = useState(moment());
+  const [isStart, setIsStart] = useState(false);
   const [currentTime, setCurrentTime] = useState(moment());
   const [intervalId, setIntervalId] = useState(0);
   return (
@@ -23,12 +24,12 @@ const Tick = () => {
             size='small'
           >
             <Row>
-              <Col span={5}>세대 : </Col>
-              <Col span={19}>{horse.teer}세대</Col>
-              <Col span={5}>레벨 : </Col>
-              <Col span={19}>{horse.currentLevel} Lv</Col>
-              <Col span={5}>경험치 증가량 : </Col>
-              <Col span={19}>{horse.nextExperience - horse.currentExperience} exp</Col>
+              <Col span={12}>세대 : </Col>
+              <Col span={12}>{horse.teer}세대</Col>
+              <Col span={12}>레벨 : </Col>
+              <Col span={12}>{horse.currentLevel} Lv</Col>
+              <Col span={12}>경험치 증가량 : </Col>
+              <Col span={12}>{horse.nextExperience - horse.currentExperience} exp</Col>
 
             </Row>
           </Card>
@@ -44,33 +45,41 @@ const Tick = () => {
             </Time>
           </FlexCenter>
         </Col>
-        <Col span={6} />
-        <Col span={6}>
+        <Col span={24}>
           <FlexCenter>
-            <Button onClick={() => {
-              setStartTime(moment())
-              let temp: any = setInterval(() => {
-                setCurrentTime(moment());
-              }, 10)
+            {
+              isStart ? <Button
+                size='large'
+                style={{ width: '100%' }}
+                onClick={() => {
+                  setIsStart(false);
+                  localStorage.setItem('tick', (currentTime.diff(startTime) / 1000).toString());
+                  setHorse(prev => ({
+                    ...prev,
+                    tick: currentTime.diff(startTime) / 1000
+                  }))
+                  clearInterval(intervalId);
+                  navigate(ROUTE_PATH.RESULT)
+                }}>
+                기록
+              </Button> : <Button
+                size='large'
+                style={{ width: '100%' }}
+                onClick={() => {
+                  setIsStart(true);
+                  setStartTime(moment())
+                  let temp: any = setInterval(() => {
+                    setCurrentTime(moment());
+                  }, 10)
 
-              setIntervalId(temp)
-            }}>시작</Button>
+                  setIntervalId(temp)
+                }}>
+                시작
+              </Button>
+            }
+
           </FlexCenter>
         </Col>
-        <Col span={6}>
-          <FlexCenter>
-            <Button onClick={() => {
-              localStorage.setItem('tick', (currentTime.diff(startTime) / 1000).toString());
-              setHorse(prev => ({
-                ...prev,
-                tick: currentTime.diff(startTime) / 1000
-              }))
-              clearInterval(intervalId);
-              navigate(ROUTE_PATH.RESULT)
-            }}>기록</Button>
-          </FlexCenter>
-        </Col>
-        <Col span={6} />
       </Row>
     </>
 

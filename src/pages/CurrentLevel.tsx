@@ -18,8 +18,8 @@ const CurrentLevel = () => {
             size='small'
           >
             <Row>
-              <Col span={4}>세대 : </Col>
-              <Col span={20}>{horse.teer}세대</Col>
+              <Col span={12}>세대 : </Col>
+              <Col span={12}>{horse.teer}세대</Col>
             </Row>
           </Card>
         </Col>
@@ -28,6 +28,8 @@ const CurrentLevel = () => {
         </Col>
         <Col span={24}>
           <Select
+            size="large"
+            defaultOpen={true}
             defaultValue="1"
             style={{ width: 200 }}
             onChange={(value) => {

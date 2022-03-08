@@ -10,6 +10,13 @@ import FlexCenter from "../components/FlexCenter";
 const Experience = () => {
   let [horse, setHorse] = useRecoilState(horseState);
   const navigate = useNavigate();
+
+
+
+  const onButtonClick = () => {
+    navigate(ROUTE_PATH.TICK)
+  }
+
   return (
     <Row gutter={[8, 8]}>
       <Col span={24}>
@@ -18,10 +25,10 @@ const Experience = () => {
           size='small'
         >
           <Row>
-            <Col span={4}>세대 : </Col>
-            <Col span={20}>{horse.teer}세대</Col>
-            <Col span={4}>레벨 : </Col>
-            <Col span={20}>{horse.currentLevel} Lv</Col>
+            <Col span={12}>세대 : </Col>
+            <Col span={12}>{horse.teer}세대</Col>
+            <Col span={12}>레벨 : </Col>
+            <Col span={12}>{horse.currentLevel} Lv</Col>
           </Row>
         </Card>
       </Col>
@@ -33,6 +40,7 @@ const Experience = () => {
       </Col>
       <Col span={24}>
         <Input
+          size='large'
           onChange={
             (e) => {
               localStorage.setItem('currentExperience', e.target.value);
@@ -54,6 +62,7 @@ const Experience = () => {
       </Col>
       <Col span={24}>
         <Input
+          size='large'
           onChange={
             (e) => {
               localStorage.setItem('nextExperience', e.target.value);
@@ -65,6 +74,11 @@ const Experience = () => {
               })
             }
           }
+          onKeyDown={(e) => {
+            if(e.key === 'Enter') {
+              onButtonClick();
+            }
+          }}
           placeholder='ex) 42000 -> 다음 경험치'
           style={{ marginBottom: '1rem' }}
           type="number"
@@ -72,9 +86,7 @@ const Experience = () => {
       </Col>
       <Col span={24}>
         <FlexCenter>
-          <Button onClick={() => {
-            navigate(ROUTE_PATH.TICK)
-          }}>계속하기</Button>
+          <Button onClick={onButtonClick}>계속하기</Button>
         </FlexCenter>
       </Col>
     </Row>

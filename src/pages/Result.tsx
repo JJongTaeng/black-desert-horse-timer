@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { Button, Card, Col, Divider, Row, Select } from "antd";
 import { useRecoilState } from "recoil";
 import { horseState } from "../store";
-import styled from "@emotion/styled";
 import { ROUTE_PATH } from "../App";
 import { useNavigate } from "react-router-dom";
 import { exp } from "../utils/exp";
@@ -12,6 +11,7 @@ const Result = () => {
   let [horse, setHorse] = useRecoilState(horseState);
   const [settledTime, setSettledTime] = useState('');
   const [successTime, setSuccessTime] = useState('');
+  const [totalExp, setTotalExp] = useState(0);
   const [remainDuration, setRemainDuration] = useState({
     seconds: 0,
     minutes: 0,
@@ -27,8 +27,6 @@ const Result = () => {
       setSettledTime(moment().format('YYYY-MM-DD HH:mm:ss'));
     }
   }, [])
-
-  console.log(remainDuration)
 
   useEffect(() => {
     let intervalId = setInterval(() => {
@@ -55,10 +53,13 @@ const Result = () => {
       return;
     }
     let totalExp = 0;
-    for(let i = currentLevel; i <= targetLevel; i++) {
+    for(let i = currentLevel; i < targetLevel; i++) {
       totalExp += exp[teer][i];
     }
     totalExp = totalExp - currentExperience;
+
+    setTotalExp(totalExp);
+
     const increasedExp = nextExperience - currentExperience;
 
     const expPerSecond = increasedExp / tick;
@@ -96,6 +97,7 @@ const Result = () => {
 
         <Col span={24}>
           <Select
+            size='large'
             defaultValue={localStorage.getItem('targetLevel')}
             style={{ width: 200 }}
             onChange={(value) => {
@@ -120,6 +122,14 @@ const Result = () => {
           <Divider/>
         </Col>
         <Col span={8}>
+          남은 경험치량 :
+        </Col>
+        <Col span={16}>
+          {
+            totalExp
+          }
+        </Col>
+        <Col span={8}>
           완료 시간 :
         </Col>
         <Col span={16}>
@@ -131,16 +141,29 @@ const Result = () => {
           남은 시간 :
         </Col>
         <Col span={16}>
-          {remainDuration.hours ? remainDuration.hours : 0}시간 {' '}
-          {remainDuration.minutes ? remainDuration.minutes : 0}분 {' '}
-          {remainDuration.seconds ? remainDuration.seconds : 0}초 남았습니다.
+          {
+            remainDuration.seconds < 0 ? '설정하는 시간동안 이미 해당 레벨까지 도달했습니다.' : (
+              <>
+                <span>
+                  {remainDuration.hours ? remainDuration.hours : 0}시간 {' '}
+                </span>
+                <span>
+                  {remainDuration.minutes ? remainDuration.minutes : 0}분 {' '}
+                </span>
+                <span>
+                  {remainDuration.seconds ? remainDuration.seconds : 0}초 남았습니다.
+                </span>
+              </>
+            )
+          }
+
         </Col>
         <Col span={24}>
           <Divider/>
         </Col>
         <Col span={24}>
           <Button
-
+            size='large'
             style={{ background: "dodgerblue", width: '100%', color: "white" }}
             onClick={() => {
               localStorage.clear();

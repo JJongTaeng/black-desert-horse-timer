@@ -13,13 +13,13 @@ import { useSetRecoilState } from "recoil";
 import { horseState } from "./store";
 
 export enum ROUTE_PATH {
-  HOME = '/',
-  TEER = '/teer',
-  LEVEL = '/level',
-  EXPERIENCE = '/experience',
-  TICK = '/tick',
-  TARGET_LEVEL = '/target-level',
-  RESULT = '/result'
+  HOME = '/black-desert-horse-timer/',
+  TEER = '/black-desert-horse-timer/teer',
+  LEVEL = '/black-desert-horse-timer/level',
+  EXPERIENCE = '/black-desert-horse-timer/experience',
+  TICK = '/black-desert-horse-timer/tick',
+  TARGET_LEVEL = '/black-desert-horse-timer/target-level',
+  RESULT = '/black-desert-horse-timer/result'
 }
 
 function App() {
@@ -64,19 +64,21 @@ function App() {
 
 function getTitle(pathname: string): string {
   switch(pathname) {
-    case '/':
+    case ROUTE_PATH.HOME:
       return '시작하기'
-    case '/teer':
+    case '/black-desert-horse-timer':
+      return '시작하기'
+    case ROUTE_PATH.TEER:
       return '세대 수'
-    case '/level':
+    case ROUTE_PATH.LEVEL:
       return '현재 레벨'
-    case '/experience':
+    case ROUTE_PATH.EXPERIENCE:
       return '경험치 증가량'
-    case '/tick':
+    case ROUTE_PATH.TICK:
       return '증가 시간'
-    case '/target-level':
+    case ROUTE_PATH.TARGET_LEVEL:
       return '목표 레벨'
-    case '/result':
+    case ROUTE_PATH.RESULT:
       return '결과 창'
     default:
       return '잘못된 페이지'
@@ -94,7 +96,6 @@ const Container = styled.div`
 
   @media (min-width: 600px) {
     & {
-      margin-top: 2rem;
       border: 1px solid #efefef;
       border-radius: 3px;
       padding: 20px;
