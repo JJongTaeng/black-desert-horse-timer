@@ -91,16 +91,9 @@ const Padding = styled.div`
 
 const Container = styled.div`
   max-width: 600px;
-  min-height: calc(100vh - 4rem);
   margin: auto;
-
-  @media (min-width: 600px) {
-    & {
-      border: 1px solid #efefef;
-      border-radius: 3px;
-      padding: 20px;
-    }
-  }
+  min-height: 100vh;
+  background: #f7f8f9;
 `
 
 function allSettled() {

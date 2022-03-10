@@ -6,6 +6,9 @@ import { ROUTE_PATH } from "../App";
 import { useNavigate } from "react-router-dom";
 import { exp } from "../utils/exp";
 import moment from "moment";
+import styled from "@emotion/styled";
+import FlexCenter from "../components/FlexCenter";
+import { numberWithCommas } from "../utils/utils";
 
 const Result = () => {
   let [horse, setHorse] = useRecoilState(horseState);
@@ -16,8 +19,22 @@ const Result = () => {
     seconds: 0,
     minutes: 0,
     hours: 0,
+  });  const [open, setOpen] = useState(true);
+  moment.locale('ko', {
+    calendar : {
+      sameDay : '[오늘] LT',
+      nextDay : '[내일] LT',
+    }
   });
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if(open) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+  }, [open])
 
   useEffect(() => {
     if(localStorage.getItem('settledTime')) {
@@ -30,9 +47,10 @@ const Result = () => {
 
   useEffect(() => {
     let intervalId = setInterval(() => {
-      const seconds = moment.duration(moment(successTime).diff(moment())).seconds();
-      const minutes = moment.duration(moment(successTime).diff(moment())).minutes();
-      const hours = moment.duration(moment(successTime).diff(moment())).hours();
+      const remainTime = moment.duration(moment(successTime).diff(moment())).asSeconds()
+      const seconds = parseInt((remainTime % 3600 % 60).toString());
+      const minutes = parseInt((remainTime % 3600 / 60).toString());
+      const hours = parseInt((remainTime / 3600).toString());
 
       setRemainDuration({
         seconds,
@@ -63,8 +81,10 @@ const Result = () => {
     const increasedExp = nextExperience - currentExperience;
 
     const expPerSecond = increasedExp / tick;
+    const endSecond = totalExp / expPerSecond;
 
-    let date = moment(settledTime).add(totalExp / expPerSecond, 'seconds').format('YYYY-MM-DD HH:mm:ss')
+
+    let date = moment(settledTime === '' ? moment() : settledTime).add( endSecond, 'seconds').format('YYYY-MM-DD HH:mm:ss')
     localStorage.setItem('successTime', date)
     setSuccessTime(date);
 
@@ -84,19 +104,19 @@ const Result = () => {
               <Col span={12}>레벨 : </Col>
               <Col span={12}>{horse.currentLevel} Lv</Col>
               <Col span={12}>경험치 증가량 : </Col>
-              <Col span={12}>{horse.nextExperience - horse.currentExperience} exp</Col>
+              <Col span={12}>{numberWithCommas(horse.nextExperience - horse.currentExperience)} exp</Col>
               <Col span={12}>증가 틱(s) : </Col>
               <Col span={12}>{horse.tick} sec</Col>
             </Row>
           </Card>
         </Col>
-        <Col span={24} style={{ margin: '2rem 0 0 0' }}>
-          <p>모든 설정을 마쳤습니다.</p>
-          <p>아래의 목표 레벨을 설정해주세요.</p>
+        <Col span={24}>
+          <p>모든 설정을 마쳤습니다.<br /> 아래의 목표 레벨을 설정해주세요.</p>
         </Col>
-
         <Col span={24}>
           <Select
+            open={open}
+            onClick={() => setOpen(prev => !prev)}
             size='large'
             defaultValue={localStorage.getItem('targetLevel')}
             style={{ width: 200 }}
@@ -126,7 +146,7 @@ const Result = () => {
         </Col>
         <Col span={16}>
           {
-            totalExp
+            numberWithCommas(totalExp)
           }
         </Col>
         <Col span={8}>
@@ -162,29 +182,37 @@ const Result = () => {
           <Divider/>
         </Col>
         <Col span={24}>
-          <Button
-            size='large'
-            style={{ background: "dodgerblue", width: '100%', color: "white" }}
-            onClick={() => {
-              localStorage.clear();
-              setHorse({
-                targetLevel: 0,
-                currentLevel: 0,
-                teer: 0,
-                tick: 0,
-                currentExperience: 0,
-                nextExperience: 0,
-              });
+          <FlexCenter>
+            <CircleButton
+              size='large'
+              style={{ background: "dodgerblue", color: "white" }}
+              onClick={() => {
+                localStorage.clear();
+                setHorse({
+                  targetLevel: 0,
+                  currentLevel: 0,
+                  teer: 0,
+                  tick: 0,
+                  currentExperience: 0,
+                  nextExperience: 0,
+                });
 
-              navigate(ROUTE_PATH.HOME);
-            }}>
-            초기화
-          </Button>
+                navigate(ROUTE_PATH.HOME);
+              }}>
+              초기화
+            </CircleButton>
+          </FlexCenter>
         </Col>
       </Row>
     </>
 
   );
 };
+
+const CircleButton = styled(Button)`
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+`
 
 export default Result;

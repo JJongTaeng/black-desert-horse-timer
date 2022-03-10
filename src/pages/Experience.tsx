@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Card, Col, Input, Row } from "antd";
+import { Button, Card, Col, Divider, Input, Row } from "antd";
 import { ROUTE_PATH } from "../App";
 import { useRecoilState } from "recoil";
 import { horseState } from "../store";
@@ -10,6 +10,7 @@ import FlexCenter from "../components/FlexCenter";
 const Experience = () => {
   let [horse, setHorse] = useRecoilState(horseState);
   const navigate = useNavigate();
+  localStorage.removeItem('settledTime');
 
 
 
@@ -40,6 +41,7 @@ const Experience = () => {
       </Col>
       <Col span={24}>
         <Input
+          pattern="[0-9]*"
           size='large'
           onChange={
             (e) => {
@@ -62,6 +64,7 @@ const Experience = () => {
       </Col>
       <Col span={24}>
         <Input
+          pattern="[0-9]*"
           size='large'
           onChange={
             (e) => {
@@ -85,13 +88,26 @@ const Experience = () => {
         />
       </Col>
       <Col span={24}>
+        <Divider />
+      </Col>
+      <Col span={24}>
         <FlexCenter>
-          <Button onClick={onButtonClick}>계속하기</Button>
+          <CircleButton
+            onClick={onButtonClick}
+          >
+            계속하기
+          </CircleButton>
         </FlexCenter>
       </Col>
     </Row>
   );
 };
+
+const CircleButton = styled(Button)`
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+`
 
 const P = styled.p`
   font-size: 1.2rem;

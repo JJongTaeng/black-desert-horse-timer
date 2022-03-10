@@ -1,5 +1,5 @@
-import React from 'react';
-import { Button, Col, Row, Select } from "antd";
+import React, { useEffect, useState } from 'react';
+import { Button, Col, Divider, Row, Select } from "antd";
 import styled from "@emotion/styled";
 import { useSetRecoilState } from "recoil";
 import { horseState } from "../store";
@@ -9,6 +9,16 @@ import { ROUTE_PATH } from "../App";
 const Teer = () => {
   const navigate = useNavigate();
   let setHorse = useSetRecoilState(horseState);
+  localStorage.removeItem('settledTime');
+  const [open, setOpen] = useState(true);
+
+  useEffect(() => {
+    if(open) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+  }, [open])
 
   return (
     <Row>
@@ -16,8 +26,12 @@ const Teer = () => {
         <P>현재 조련중인 말의 세대를 입력해주세요.</P>
       </Col>
       <Col span={24}>
+        <Divider />
+      </Col>
+      <Col span={24}>
         <Select
-          defaultOpen={true}
+          open={open}
+          onClick={() => setOpen(prev => !prev)}
           size='large'
           defaultValue="1"
           style={{ width: 200 }}
@@ -28,7 +42,8 @@ const Teer = () => {
                 teer: parseInt(value),
               })
             )
-            navigate(ROUTE_PATH.LEVEL)
+            document.body.style.overflow = 'auto';
+            navigate(ROUTE_PATH.LEVEL);
           }}>
           <Select.Option value="1">1세대</Select.Option>
           <Select.Option value="2">2세대</Select.Option>

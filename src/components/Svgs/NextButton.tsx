@@ -17,7 +17,6 @@ const NextButton = ({ onClick, style }: NextButtonProps) => {
 
 const Next = styled(GrNext)`
   cursor: pointer;
-
 `
 
 export default NextButton;

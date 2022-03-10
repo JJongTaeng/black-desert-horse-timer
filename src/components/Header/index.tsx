@@ -9,15 +9,15 @@ interface HeaderProps {
 
 }
 
-const Header = ({title}: HeaderProps) => {
+const Header = ({ title }: HeaderProps) => {
   const navigate = useNavigate();
   return (
     <HeaderContainer>
-      <PrevButton style={{margin: '0 1rem'}} onClick={() => navigate(-1)} />
+      <PrevButton style={{ margin: '0 1rem' }} onClick={() => navigate(-1)}/>
       <Title>
         {title}
       </Title>
-      <NextButton style={{margin: '0 1rem'}} onClick={() => navigate(1)} />
+      <NextButton style={{ margin: '0 1rem' }} onClick={() => navigate(1)}/>
     </HeaderContainer>
   );
 };
@@ -33,6 +33,8 @@ const HeaderContainer = styled.div`
 
 const Title = styled.span`
   font-size: 2rem;
+  display: flex;
+  align-items: center;
 `
 
 export default Header;
